@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model ExportOrder {
+  id          String   @id @default(uuid())
+  orderNumber String   @unique
+
+  items ExportOrderItem[] // líneas de pedido
+
+  modality MODALITY
+  salePlace SALE_PLACE
+  deliveryModality DELIVERY_MODALITY
+
+  observations String? // observaciones adicionales
+
+  clientId String? // FK al microservicio de Clientes; opcional, si aplica
+
+  createdBy String? // usuario que creó la orden (FK a usuario en auth microservicio; opcional)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("exportOrders") // nombre de tabla en la base de datos
+}
+
+model ExportOrderItem {
+  id              Int           @id @default(autoincrement())
+  exportOrder   ExportOrder @relation(fields: [exportOrderId], references: [id])
+  exportOrderId String
+
+  productId   String // FK al microservicio de Productos; aquí solo referenciamos el ID
+  productName String // nombre del producto (puede ser un SKU o descripción breve)
+
+  description      String // descripción detallada (modelo & spec)
+  quantityOrdered  Int
+
+  priceUnit Decimal @db.Decimal(12, 2)
+
+  totalPrice Decimal @db.Decimal(12, 2)
+
+  currency String // e.g., "USD", "EUR"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("exportOrderItems") // nombre de tabla en la base de datos
+}
+
+
+enum MODALITY {
+  REPOSICION
+  CONSIGNA
+  VENTA
+  COTIZACION
+}
+
+enum DELIVERY_MODALITY {
+  SUCURSAL
+  OFICINAS
+  TERMINAL
+  AEREOPUERTO
+  DESTINO
+  TRANSPORTADOR
+}
+
+enum SALE_PLACE {
+  LOCAL
+  INTERIOR
+}
