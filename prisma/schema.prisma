@@ -47,6 +47,8 @@ model ExportOrderItem {
 
   currency String // e.g., "USD", "EUR"
 
+  warehouseId String? // FK al microservicio de Almacenes; opcional, si aplica
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

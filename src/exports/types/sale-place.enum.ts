@@ -1,0 +1,13 @@
+// {
+//     SUCURSAL: "SUCURSAL";
+//     OFICINAS: "OFICINAS";
+//     TERMINAL: "TERMINAL";
+//     AEREOPUERTO: "AEREOPUERTO";
+//     DESTINO: "DESTINO";
+//     TRANSPORTADOR: "TRANSPORTADOR";
+// }
+
+export enum SalePlace {
+    LOCAL = "LOCAL",
+    INTERIOR = "INTERIOR",
+}

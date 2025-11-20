@@ -1,0 +1,7 @@
+// "REPOSICION" | "CONSIGNA" | "VENTA" | "COTIZACION"
+export enum Modality {
+    REPOSICION = "REPOSICION",
+    CONSIGNA = "CONSIGNA",
+    VENTA = "VENTA",
+    COTIZACION = "COTIZACION",
+}
